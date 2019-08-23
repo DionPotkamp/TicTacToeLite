@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="styles.css">
+    
+    <title>Tic Tac Toe</title>
+</head>
+<body>
+    <!-- Text output field -->
+    <span class="text" id="text">
+        &nbsp;
+    </span>
+    <!-- Field for statistics -->
+    <div class="stats">
+        Player X wins: <span id="Xwins">0</span><br>
+        Player O wins: <span id="Owins">0</span><br>
+        Players draw: <span id="draws">0</span><br>
+    </div>
+
+    <!-- The actual play field -->
+<div class="canvas" id="canvas">
+    <div class="cell border" id="00" onclick="core('00')"></div>
+    <div class="cell border" id="01" onclick="core('01')"></div>
+    <div class="cell border" id="02" onclick="core('02')"></div>
+    <div class="cell border" id="10" onclick="core('10')"></div>
+    <div class="cell border" id="11" onclick="core('11')"></div>
+    <div class="cell border" id="12" onclick="core('12')"></div>
+    <div class="cell border" id="20" onclick="core('20')"></div>
+    <div class="cell border" id="21" onclick="core('21')"></div>
+    <div class="cell border" id="22" onclick="core('22')"></div>
+</div>
+<!-- JS for the game -->
+<script src="game.js"></script>
+</body>
+</html>
