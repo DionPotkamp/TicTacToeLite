@@ -3,25 +3,29 @@
 }
 body {
     background-color: black;
+    font-family: monospace;
 }
-#canvas {
-    width: 606px;
-    max-width: 606px;
-    height: 606px;
-    max-height: 606px;
+h1 {
+    margin: 5px;
+    padding: 0;
+    font-size: 300%;
+    color: white;
+    text-align: center;
+}
+table {
+    width: 600px;
+    max-width: 600px;
+    height: 600px;
+    max-height: 600px;
     margin: auto;
     padding: 0;
     background-color: white;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: left;
-}
-.border {
+    border-collapse: collapse;
+  }
+  th, td {
     border: 1px solid black;
-}
-.cell {
-    flex-grow: 0;
-    flex-shrink: 0;
+  }
+  td {
     width: 200px;
     max-width: 200px;
     height: 200px;
@@ -30,31 +34,44 @@ body {
     padding: 0;
     border: 1px solid lightgray;
     text-align: center;
-    font-size: 130px;
-}
+    font-size: 180px;
+  }
 .text, .stats {
     margin: 3px 0;
     color: white;
-    font-size: 200%;
+    font-size: 150%;
     text-align: center;
 }
+.text {
+    font-size: 250%;
+}
 .github {
-    font-size: 33px;
+    position: fixed;
+    width: 90px;
+    max-width: 90px;
+    height: 90px;
+    max-height: 90px;
 }
 
 @media only screen and (max-width: 600px) {
-    #canvas {
-        width: 306px;
-        max-width: 306px;
-        height: 306px;
-        max-height: 306px;
+    table {
+        width: 300px;
+        max-width: 300px;
+        height: 300px;
+        max-height: 300px;
     }
-    .cell {
+    td {
         width: 100px;
         max-width: 100px;
         height: 100px;
         max-height: 100px;
         font-size: 65px;
+    }
+    .github {
+        width: 50px;
+        max-width: 50px;
+        height: 50px;
+        max-height: 50px;
     }
 }
 
@@ -63,19 +80,22 @@ body {
         font-size: 140%;
     }
     .github {
-        font-size: 50px;
+        width: 150px;
+        max-width: 150px;
+        height: 150px;
+        max-height: 150px;
     }
-    #canvas {
+    table {
         width: 1206px;
         max-width: 1206px;
         height: 1206px;
         max-height: 1206px;
     }
-    .cell {
+    td {
         width: 400px;
         max-width: 400px;
         height: 400px;
         max-height: 400px;
-        font-size: 250px;
+        font-size: 330px;
     }
 }
