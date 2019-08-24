@@ -10,8 +10,8 @@ board = [
  * positions: all the available spots on the board. First letter = row, second = collum
  */
 positions = [
-    "00", "01", "02", 
-    "10", "11", "12", 
+    "00", "01", "02",
+    "10", "11", "12",
     "20", "21", "22"
 ];
 positionArray = "";
@@ -20,8 +20,9 @@ winner = null;
 
 /** array of all possible players */
 players = ['X', 'O'];
+playerSymbols = ['&times;', '&#9675;'];
 CurrentPlayer = setNewPlayer();
-    document.getElementById('text').innerHTML = 'Starting player is: ' + CurrentPlayer;
+document.getElementById('text').innerHTML = 'Starting player is: ' + CurrentPlayer;
 
 /** using unicode to draw the X and O */
 PlayerX = '&times;';
@@ -44,19 +45,9 @@ function setNewPlayer() {
  * @return boolean, if the execution was a succes or not.
  */
 function switchPlayer() {
-    if (CurrentPlayer == "") {
-        return false;
-    } else if (CurrentPlayer == "X") {
-        CurrentPlayer = "O";
-        document.getElementById('text').innerHTML = "Current player is " + CurrentPlayer;
-        return true;
-    } else if (CurrentPlayer == "O") {
-        CurrentPlayer = "X";
-        document.getElementById('text').innerHTML = "Current player is " + CurrentPlayer;
-        return true;
-    } else {
-        return false;
-    }
+    CurrentPlayer = (CurrentPlayer == players[0] ? players[1] : players[0]);
+    document.getElementById('text').innerHTML = "Current player is " + CurrentPlayer;
+    return true;
 }
 
 /**
@@ -64,16 +55,9 @@ function switchPlayer() {
  * @return boolean, if the execution was a succes or not.
  */
 function place(position) {
-    if (CurrentPlayer == "X") {
-        document.getElementById(position).innerHTML = PlayerX;
-        return true;
-    } else if (CurrentPlayer == "O") {
-        document.getElementById(position).innerHTML = PlayerO;
-        return true;
-    } else {
-        document.getElementById(position).innerHTML = "?";
-        return false;
-    }
+    draw = (CurrentPlayer == players[0] ? playerSymbols[0] : playerSymbols[1]);
+    document.getElementById(position).innerHTML = draw;
+    return true;
 }
 
 /**
@@ -82,16 +66,8 @@ function place(position) {
  */
 function checkIfAvailable(position) {
     positionArray = position.split("");
-    var boardPos = board[positionArray[0]][positionArray[1]];
-
-    if(boardPos == "") {
-        return true;
-    } else if (boardPos == "X" || boardPos == "O") {
-        return false;
-    } else {
-        return false;
-    }
-   
+    boardPos = board[positionArray[0]][positionArray[1]];
+    return (boardPos == "" ? true : false);
 }
 
 /**
@@ -100,82 +76,48 @@ function checkIfAvailable(position) {
  * @return boolean, if the execution was a succes or not.
  */
 function putInBoard(position) {
-    var positionArray = position.split("");
-
-    if (CurrentPlayer == "X" || CurrentPlayer == "O") {
-        if (board[positionArray[0]][positionArray[1]] = CurrentPlayer) {
-            positions.splice(positions.indexOf(position), 1);
-            return true;
-        } else {
-            return false;
-        }
-    } else {
-        return false;
-    }
+    positionArray = position.split("");
+    board[positionArray[0]][positionArray[1]] = CurrentPlayer;
+    positions.splice(positions.indexOf(position), 1);
+    return true;
 }
 
 /**
  * Colors the winner green, or all gray on draw
+ * @param String type of the winn.
+ * @param String the row or colomn where the win was detected
  * @return boolean, if the execution was a succes or not.
  */
 function drawWin(type, cell) {
+    color = 'rgb(34, 221, 34)';
     if (type == 'horizontal') {
-        one = [cell]+[0];
-        two = [cell]+[1];
-        three = [cell]+[2];
-        document.getElementById(one).style.color = 'rgb(34, 221, 34)';
-        document.getElementById(two).style.color = 'rgb(34, 221, 34)';
-        document.getElementById(three).style.color = 'rgb(34, 221, 34)';
-        
-        document.getElementById('text').innerHTML = CurrentPlayer + " won the game!";
-        return true;
+        cells = [[cell] + [0], [cell] + [1], [cell] + [2]];
     } else if (type == 'vertical') {
-        one = [0]+[cell];
-        two = [1]+[cell];
-        three = [2]+[cell];
-        document.getElementById(one).style.color = 'rgb(34, 221, 34)';
-        document.getElementById(two).style.color = 'rgb(34, 221, 34)';
-        document.getElementById(three).style.color = 'rgb(34, 221, 34)';
-        
-        document.getElementById('text').innerHTML = CurrentPlayer + " won the game!";
-        return true;
+        cells = [[0] + [cell], [1] + [cell], [2] + [cell]];
     } else if (type == 'diaL-R') {
-        document.getElementById('00').style.color = 'rgb(34, 221, 34)';
-        document.getElementById('11').style.color = 'rgb(34, 221, 34)';
-        document.getElementById('22').style.color = 'rgb(34, 221, 34)';
-        
-        document.getElementById('text').innerHTML = CurrentPlayer + " won the game!";
-        return true;
+        cells = ['00', '11', '22'];
     } else if (type == 'diaR-L') {
-        document.getElementById('02').style.color = 'rgb(34, 221, 34)';
-        document.getElementById('11').style.color = 'rgb(34, 221, 34)';
-        document.getElementById('20').style.color = 'rgb(34, 221, 34)';
-        
-        document.getElementById('text').innerHTML = CurrentPlayer + " won the game!";
-        return true;
-    } else if (type == 'draw') {
-        ColorThese = ["00", "01", "02", "10", "11", "12", "20", "21", "22"];
-        ColorThese.forEach(one);
-        function one(value) {
-            document.getElementById(value).style.color = 'rgb(128, 128, 128)';
-        }
-        
+        cells = ['02', '11', '20'];
+    } 
+    document.getElementById('text').innerHTML = CurrentPlayer + " won the game!";
+    if (type == 'draw') {
+        cells = ["00", "01", "02", "10", "11", "12", "20", "21", "22"];
+        color = 'rgb(128, 128, 128)';
         document.getElementById('text').innerHTML = "Draw!";
-        return true;
     }
-    return false;
+    cells.forEach(one);
+    function one(value) {
+        document.getElementById(value).style.color = color;
+    }
+    return true;
 }
 
 /**
- * Checks if the three given values are equal to eachother
+ * Checks if the three given values are equal (and not empty) to eachother
  * @return boolean, if the values are equal or not.
  */
 function equal(a, b, c) {
-    if (a == b && a == c && a != '') {
-        return true;
-    } else {
-        return false;
-    }
+    return (a == b && a == c && a != '' ? true : false);
 }
 
 /**
@@ -185,7 +127,7 @@ function equal(a, b, c) {
  */
 function checkWinner() {
     //horizontal
-    for(var i = 0; i < board.length; i++) {
+    for (var i = 0; i < board.length; i++) {
         if (equal(board[i][0], board[i][1], board[i][2])) {
             winner = CurrentPlayer;
             addWin();
@@ -194,7 +136,7 @@ function checkWinner() {
         }
     }
     //vertical
-    for(var i = 0; i < board.length; i++) {
+    for (var i = 0; i < board.length; i++) {
         if (equal(board[0][i], board[1][i], board[2][i])) {
             winner = CurrentPlayer;
             addWin();
@@ -223,7 +165,7 @@ function checkWinner() {
         drawWin('draw', 0);
         return true;
     }
-    
+
     return false;
 }
 
@@ -247,23 +189,23 @@ function addWin() {
  * Resets all of the variables
  * @return boolean, if the execution was a succes or not.
  */
-function restartGame() {    
-    board = [['', '', ''],['', '', ''],['', '', '']];
+function restartGame() {
+    board = [['', '', ''], ['', '', ''], ['', '', '']];
     positions = ["00", "01", "02", "10", "11", "12", "20", "21", "22"];
     positionArray = "";
 
-    if(winner == 'X') {
+    if (winner == 'X') {
         CurrentPlayer = 'O';
-    } else if(winner == 'O') {
+    } else if (winner == 'O') {
         CurrentPlayer = 'X';
     }
     document.getElementById('text').innerHTML = 'Starting player is: ' + CurrentPlayer;
-    
+
     winner = null;
-    
+
     PlayerX = '&times;';
     PlayerO = '&#9675;';
-    
+
     positions.forEach(one);
     function one(value) {
         document.getElementById(value).innerHTML = "&nbsp;";
@@ -277,7 +219,7 @@ function restartGame() {
  * @return boolean, if the execution was a succes or not.
  */
 function resetScores() {
-    
+
     PlayerXWins = 0;
     PlayerOWins = 0;
     PlayerDraws = 0;
@@ -295,7 +237,7 @@ function resetScores() {
  */
 function core(position) {
     if (winner != null) restartGame();
-    if(positions === undefined || positions.length == 0) restartGame();
+    if (positions === undefined || positions.length == 0) restartGame();
 
     if (checkIfAvailable(position)) {
         if (putInBoard(position)) {
@@ -307,7 +249,7 @@ function core(position) {
                     return;
                 } else {
                     if (switchPlayer()) {
-                        
+
                     } else {
                         return;
                     }
