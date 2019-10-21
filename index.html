@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="icon" href="favicon.ico">
     <link rel="stylesheet" href="styles.css">
-    
     <title>Tic Tac Toe</title>
 </head>
 <body>
@@ -13,39 +12,29 @@
         <img src="GitHub.png" class="github" alt="Github link">
     </a>
     <h1>Tic Tac Toe</h1>
-    
     <table class="canvas" id="canvas">
-        
-        <!-- Text output field -->
         <caption class="text" id="text">&nbsp;</caption>
-
-        <!-- The actual play field-->
         <tr>
-            <td class="" id="00" onclick="core('00')">&nbsp;</td>
-            <td class="" id="01" onclick="core('01')">&nbsp;</td>
-            <td class="" id="02" onclick="core('02')">&nbsp;</td>
+            <td class="" id="00" onclick="core(this.id)">&nbsp;</td>
+            <td class="" id="01" onclick="core(this.id)">&nbsp;</td>
+            <td class="" id="02" onclick="core(this.id)">&nbsp;</td>
         </tr>
         <tr>
-            <td class="" id="10" onclick="core('10')">&nbsp;</td>
-            <td class="" id="11" onclick="core('11')">&nbsp;</td>
-            <td class="" id="12" onclick="core('12')">&nbsp;</td>
+            <td class="" id="10" onclick="core(this.id)">&nbsp;</td>
+            <td class="" id="11" onclick="core(this.id)">&nbsp;</td>
+            <td class="" id="12" onclick="core(this.id)">&nbsp;</td>
         </tr>
         <tr>
-            <td class="" id="20" onclick="core('20')">&nbsp;</td>
-            <td class="" id="21" onclick="core('21')">&nbsp;</td>
-            <td class="" id="22" onclick="core('22')">&nbsp;</td>
+            <td class="" id="20" onclick="core(this.id)">&nbsp;</td>
+            <td class="" id="21" onclick="core(this.id)">&nbsp;</td>
+            <td class="" id="22" onclick="core(this.id)">&nbsp;</td>
         </tr>
-
     </table>
-
-    <!-- Field for the scores -->
     <div class="stats">
         Player X wins: <span id="Xwins">0</span><br>
         Player O wins: <span id="Owins">0</span><br>
         Players draw: <span id="draws">0</span><br>
     </div>
-
-    <!-- JS for the game -->
     <script src="game.js"></script>
 </body>
 </html>

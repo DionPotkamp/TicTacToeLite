@@ -22,10 +22,7 @@ table {
     background-color: white;
     border-collapse: collapse;
   }
-  th, td {
-    border: 1px solid black;
-  }
-  td {
+td {
     width: 200px;
     max-width: 200px;
     height: 200px;
@@ -35,7 +32,7 @@ table {
     border: 1px solid lightgray;
     text-align: center;
     font-size: 180px;
-  }
+}
 .text, .stats {
     margin: 3px 0;
     color: white;
@@ -52,7 +49,6 @@ table {
     height: 90px;
     max-height: 90px;
 }
-
 @media only screen and (max-width: 600px) {
     table {
         width: 300px;
@@ -74,7 +70,6 @@ table {
         max-height: 50px;
     }
 }
-
 @media only screen and (min-width: 2560px) {
     body {
         font-size: 140%;

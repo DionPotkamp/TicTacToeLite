@@ -1,30 +1,30 @@
-/**
- * Board is the array where the symbol (representing the player) is stored.
- */
+/** Board is the array where the symbol (representing the player) is stored. */
 let board = [['', '', ''], ['', '', ''], ['', '', '']];
-/**
- * positions: all the available spots on the board. First letter = row, second = collum
- */
+/** positions: all the available spots on the board. First letter = row, second = collum. */
 let positions = ["00", "01", "02", "10", "11", "12", "20", "21", "22"];
 let positionArray = "";
 let winner = null;
 let timeOut;
-/** array of all possible players */
+/** array with players */
 let players = ['X', 'O'];
 let playerSymbols = ['&times;', '&#9675;'];
 let CurrentPlayer = players[Math.floor(Math.random() * players.length)];
-document.getElementById('text').innerHTML = 'Starting player is: ' + CurrentPlayer;
+let outputText = document.getElementById('text');
+outputText.innerHTML = 'Starting player is: ' + CurrentPlayer;
 /** The scores, wins and draws */
 let PlayerXWins = 0;
+let Xwins = document.getElementById('Xwins');
 let PlayerOWins = 0;
+let Owins = document.getElementById('Owins');
 let PlayerDraws = 0;
+let draws = document.getElementById('draws');
 /**
  * Switch to the other player
  * @return boolean, if the execution was a success or not.
  */
 function switchPlayer() {
     CurrentPlayer = (CurrentPlayer === players[0] ? players[1] : players[0]);
-    document.getElementById('text').innerHTML = "Current player is " + CurrentPlayer;
+    outputText.innerHTML = "Current player is " + CurrentPlayer;
     return true;
 }
 /**
@@ -58,9 +58,9 @@ function putInBoard(position) {
 
 /**
  * Colors the winner green, or all gray on draw
- * @param type type of the winn.
- * @param cell the row or column where the win was detected
- * @returns {boolean} if the execution was a success or not.
+ * @param type, type of the winn.
+ * @param cell, the row or column where the win was detected
+ * @returns boolean, if the execution was a success or not.
  */
 function drawWin(type, cell) {
     let color = 'rgb(34, 221, 34)';
@@ -76,11 +76,11 @@ function drawWin(type, cell) {
     } else {
         return false;
     }
-    document.getElementById('text').innerHTML = CurrentPlayer + " won the game!";
+    outputText.innerHTML = CurrentPlayer + " won the game!";
     if (type === 'draw') {
         cells = ["00", "01", "02", "10", "11", "12", "20", "21", "22"];
         color = 'rgb(128, 128, 128)';
-        document.getElementById('text').innerHTML = "Draw!";
+        outputText.innerHTML = "Draw!";
     }
     cells.forEach(one);
     function one(value) {
@@ -98,10 +98,10 @@ function equal(a, b, c) {
 /**
  * Checks if the current player made a winning move
  * if so, it will add a win and call function drawWin
- * @return boolean, if the execution was a success or not.
+ * @return boolean, if it's a winning move
  */
 function checkWinner() {
-    for (var i = 0; i < board.length; i++) {
+    for (let i = 0; i < board.length; i++) {
         //horizontal
         if (equal(board[i][0], board[i][1], board[i][2])) {
             addWin();
@@ -128,7 +128,7 @@ function checkWinner() {
         return true;
     }
     //draw
-    if (!Array.isArray(positions) || !positions.length) {
+    if (positions.length === 0) {
         winner = 'draw';
         PlayerDraws++;
         drawWin('draw', 0);
@@ -136,27 +136,26 @@ function checkWinner() {
     }
     return false;
 }
-/**
- * If the player wins this round it will add one to the score
- */
+/** If the player wins this round it will add one to the score */
 function addWin() {
     winner = CurrentPlayer;
     (CurrentPlayer === players[0] ? PlayerXWins++ : PlayerOWins++);
-    document.getElementById('Xwins').innerHTML = PlayerXWins;
-    document.getElementById('Owins').innerHTML = PlayerOWins;
-    document.getElementById('draws').innerHTML = PlayerDraws;
+    Xwins.innerHTML = ''+PlayerXWins;
+    Owins.innerHTML = ''+PlayerOWins;
+    draws.innerHTML = ''+PlayerDraws;
 }
-/**
- * Resets all of the variables
- */
+/** Resets all of the variables */
 function restartGame() {
     board = [['', '', ''], ['', '', ''], ['', '', '']];
     positions = ["00", "01", "02", "10", "11", "12", "20", "21", "22"];
     positionArray = "";
     CurrentPlayer = (winner === players[0] ? players[1] : players[0]);
-    document.getElementById('text').innerHTML = 'Starting player is: ' + CurrentPlayer;
+    outputText.innerHTML = 'Starting player is: ' + CurrentPlayer;
     winner = null;
     timeOut = null;
+    Xwins.innerHTML = '0'; PlayerXWins = 0;
+    Owins.innerHTML = '0'; PlayerOWins = 0;
+    draws.innerHTML = '0'; PlayerDraws = 0;
     positions.forEach(one);
     function one(value) {
         document.getElementById(value).innerHTML = "&nbsp;";
@@ -169,8 +168,7 @@ function restartGame() {
  */
 function core(position) {
     clearTimeout(timeOut);
-    if (winner !== null) restartGame();
-    if (positions === undefined || positions.length === 0) restartGame();
+    if (winner !== null || positions === undefined || positions.length === 0) restartGame();
     if (checkIfAvailable(position)) {
         if (putInBoard(position)) {
             if (place(position)) {
